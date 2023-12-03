@@ -5,14 +5,14 @@ type OrderDocument = Order & Document;
 
 @Schema({ timestamps: true, versionKey: false })
 class Order extends Document {
-  @Prop(raw({ name: { type: String } }))
-  customer: Record<string, string>;
+  @Prop()
+  customerName: string;
 
   @Prop()
   description: string;
 
-  @Prop(raw({ preparer: { name: { type: String } } }))
-  preparer: Record<string, string>;
+  @Prop()
+  preparerName: string;
 
   @Prop(
     raw({
