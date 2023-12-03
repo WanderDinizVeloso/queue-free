@@ -1,3 +1,12 @@
+## [1.2.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.1.0...1.2.0) (2023-12-03)
+
+
+### Features
+
+* add interceptor interface ([d7eb49f](https://github.com/WanderDinizVeloso/queue-free/commit/d7eb49fb12c5b814ca17439029bb80ef004afe5d))
+* add invalid-id interceptor ([26686bf](https://github.com/WanderDinizVeloso/queue-free/commit/26686bfdf44f181da48b40109d72a7c9f45b6e38))
+* add invalid-id interceptor in main ([f0265ea](https://github.com/WanderDinizVeloso/queue-free/commit/f0265ea2ebb19df95e61a2f05d67108916817734))
+
 ## [1.1.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.0.0...1.1.0) (2023-12-03)
 
 
