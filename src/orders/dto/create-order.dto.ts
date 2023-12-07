@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNotEmptyObject } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 
 const PROPERTIES_DESCRIPTION = {
   customerName: 'Customer name. Requirements: not empty',
@@ -8,7 +8,7 @@ const PROPERTIES_DESCRIPTION = {
 
 export class CreateOrderDto {
   @ApiProperty({ description: PROPERTIES_DESCRIPTION.customerName })
-  @IsNotEmptyObject()
+  @IsNotEmpty()
   readonly customerName: string;
 
   @ApiProperty({ description: PROPERTIES_DESCRIPTION.description })

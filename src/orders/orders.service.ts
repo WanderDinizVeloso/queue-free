@@ -6,6 +6,7 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { IPatchAndDeleteReturn, IPostReturn } from './interface/order.interface';
 import { Order, OrderDocument } from './schema/order.schema';
+import { TicketsService } from 'src/tickets/tickets.service';
 
 export const MESSAGES = {
   orderCreated: 'order created successfully.',
@@ -16,11 +17,16 @@ export const MESSAGES = {
 
 @Injectable()
 export class OrdersService {
-  constructor(@InjectModel(Order.name) private orderModel: Model<OrderDocument>) {}
+  constructor(
+    @InjectModel(Order.name) private orderModel: Model<OrderDocument>,
+    private ticketService: TicketsService,
+  ) {}
   async create(createOrderDto: CreateOrderDto): Promise<IPostReturn> {
     const { _id } = await this.orderModel.create({ ...createOrderDto, active: true });
 
-    return { _id, message: MESSAGES.orderCreated };
+    const ticket = await this.ticketService.create(_id);
+
+    return { _id, ticket, message: MESSAGES.orderCreated };
   }
 
   async findAll(): Promise<Order[]> {
@@ -28,7 +34,7 @@ export class OrdersService {
   }
 
   async findOne(id: string): Promise<Order> {
-    const order = this.orderModel.findOne({ _id: id });
+    const order = await this.orderModel.findOne({ _id: id });
 
     if (!order) {
       throw new NotFoundException(MESSAGES.orderNotFound);
@@ -38,9 +44,11 @@ export class OrdersService {
   }
 
   async update(id: string, updateOrderDto: UpdateOrderDto): Promise<IPatchAndDeleteReturn> {
-    const order = this.orderModel.findOneAndUpdate({ _id: id, active: true }, updateOrderDto, {
-      new: true,
-    });
+    const order = await this.orderModel.findOneAndUpdate(
+      { _id: id, active: true },
+      updateOrderDto,
+      { new: true },
+    );
 
     if (!order) {
       throw new NotFoundException(MESSAGES.orderNotFound);
@@ -49,8 +57,8 @@ export class OrdersService {
     return { message: MESSAGES.orderUpdated };
   }
 
-  async remove(id: string): Promise<IPatchAndDeleteReturn> {
-    const order = this.orderModel.findOneAndUpdate(
+  async remove(id: string): Promise<{ message: string }> {
+    const order = await this.orderModel.findOneAndUpdate(
       { _id: id, active: true },
       { active: false },
       { new: true },
