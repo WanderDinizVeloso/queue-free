@@ -49,7 +49,7 @@ export class OrdersController {
 
   @Delete(':id')
   @ApiOperation({ summary: SUMMARY_MESSAGE.remove })
-  async remove(@Param('id') id: string): Promise<IPatchAndDeleteReturn> {
+  async remove(@Param('id') id: string): Promise<{ message: string }> {
     return this.ordersService.remove(id);
   }
 }
