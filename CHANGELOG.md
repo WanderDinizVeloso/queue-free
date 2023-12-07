@@ -1,3 +1,15 @@
+## [1.3.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.2.0...1.3.0) (2023-12-07)
+
+
+### Features
+
+* add tickets module ([1f54359](https://github.com/WanderDinizVeloso/queue-free/commit/1f54359c95a73a84f5e4fe8c1499167143321d12))
+* add tickets module in app module ([f35ffb5](https://github.com/WanderDinizVeloso/queue-free/commit/f35ffb5aa1ef5cfe3806b881537100b050ff3baa))
+* add tickets schema ([5ade0b3](https://github.com/WanderDinizVeloso/queue-free/commit/5ade0b3259478f4af05c3f4046dd3cfb983eade4))
+* add tickets service ([a86e008](https://github.com/WanderDinizVeloso/queue-free/commit/a86e0085df5152e0d37d62b370890f563b504125))
+* add tickets test default ([f85ed48](https://github.com/WanderDinizVeloso/queue-free/commit/f85ed48eec331ec894a6c6e7ddc71f33d54653b8))
+* tickets implementation in orders ([b30bbc4](https://github.com/WanderDinizVeloso/queue-free/commit/b30bbc4a58ce6416b622f9888b8fa341db9e5195))
+
 ## [1.2.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.1.0...1.2.0) (2023-12-03)
 
 
