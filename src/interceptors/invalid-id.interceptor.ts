@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+
 import { IError } from './interface/common-interceptors.interface';
 
 export const MESSAGES = {
