@@ -1,4 +1,6 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Cache } from 'cache-manager';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -7,37 +9,49 @@ import { UpdateOrderDto } from './dto/update-order.dto';
 import { IPatchAndDeleteReturn, IPostReturn } from './interface/order.interface';
 import { Order, OrderDocument } from './schema/order.schema';
 import { TicketsService } from 'src/tickets/tickets.service';
+import { created, notFound, removed, updated } from 'src/utils/messages-response';
+import { EIGHT_HOURS, TEN_SECONDS } from 'src/utils/redis-times';
 
-export const MESSAGES = {
-  orderCreated: 'order created successfully.',
-  orderUpdated: 'order updated successfully.',
-  orderRemoved: 'order removed successfully.',
-  orderNotFound: 'order not found or not active.',
-};
+const ORDER = 'order';
+const ORDERS = 'orders';
 
 @Injectable()
 export class OrdersService {
   constructor(
     @InjectModel(Order.name) private orderModel: Model<OrderDocument>,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private ticketService: TicketsService,
   ) {}
   async create(createOrderDto: CreateOrderDto): Promise<IPostReturn> {
-    const { _id } = await this.orderModel.create({ ...createOrderDto, active: true });
+    const order = await this.orderModel.create({ ...createOrderDto, active: true });
 
-    const ticket = await this.ticketService.create(_id);
+    await this.cacheManager.set(order._id, order, EIGHT_HOURS);
 
-    return { _id, ticket, message: MESSAGES.orderCreated };
+    const ticket = await this.ticketService.create(order._id);
+
+    return { _id: order._id, ticket, message: created(ORDER) };
   }
 
   async findAll(): Promise<Order[]> {
-    return this.orderModel.find();
+    const ordersCache: Order[] = await this.cacheManager.get(ORDERS);
+
+    if (!ordersCache) {
+      const orders = await this.orderModel.find();
+
+      await this.cacheManager.set(ORDERS, orders, TEN_SECONDS);
+
+      return orders;
+    }
+
+    return ordersCache;
   }
 
   async findOne(id: string): Promise<Order> {
-    const order = await this.orderModel.findOne({ _id: id });
+    const order: Order =
+      (await this.cacheManager.get(id)) || (await this.orderModel.findOne({ _id: id }));
 
     if (!order) {
-      throw new NotFoundException(MESSAGES.orderNotFound);
+      throw new NotFoundException(notFound(ORDER));
     }
 
     return order;
@@ -51,10 +65,12 @@ export class OrdersService {
     );
 
     if (!order) {
-      throw new NotFoundException(MESSAGES.orderNotFound);
+      throw new NotFoundException(notFound(ORDER));
     }
 
-    return { message: MESSAGES.orderUpdated };
+    await this.cacheManager.set(id, order, EIGHT_HOURS);
+
+    return { message: updated(ORDER) };
   }
 
   async remove(id: string): Promise<{ message: string }> {
@@ -65,9 +81,11 @@ export class OrdersService {
     );
 
     if (!order) {
-      throw new NotFoundException(MESSAGES.orderNotFound);
+      throw new NotFoundException(notFound(ORDER));
     }
 
-    return { message: MESSAGES.orderRemoved };
+    await this.cacheManager.del(id);
+
+    return { message: removed(ORDER) };
   }
 }

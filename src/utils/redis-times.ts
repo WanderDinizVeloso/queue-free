@@ -1,0 +1,4 @@
+const EIGHT_HOURS = 28800000;
+const TEN_SECONDS = 10000;
+
+export { EIGHT_HOURS, TEN_SECONDS };
