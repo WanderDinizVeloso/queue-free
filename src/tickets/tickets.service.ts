@@ -6,12 +6,10 @@ import { Model } from 'mongoose';
 
 import { Ticket, TicketDocument } from './schema/ticket.schema';
 import { EIGHT_HOURS, TEN_SECONDS } from 'src/utils/redis-times';
+import { notFound, removed } from 'src/utils/messages-response';
 
-export const MESSAGES = {
-  ticketCreated: 'ticket created successfully.',
-  ticketRemoved: 'ticket removed successfully.',
-  ticketNotFound: 'ticket not found or not active.',
-};
+const TICKET = 'ticket';
+const TICKETS = 'tickets';
 
 @Injectable()
 export class TicketsService {
@@ -35,12 +33,12 @@ export class TicketsService {
   }
 
   async findAll(): Promise<Ticket[]> {
-    const ticketsCache: Ticket[] = await this.cacheManager.get('tickets');
+    const ticketsCache: Ticket[] = await this.cacheManager.get(TICKETS);
 
     if (!ticketsCache) {
       const tickets = await this.ticketModel.find();
 
-      await this.cacheManager.set('tickets', tickets, TEN_SECONDS);
+      await this.cacheManager.set(TICKETS, tickets, TEN_SECONDS);
 
       return tickets;
     }
@@ -53,7 +51,7 @@ export class TicketsService {
       (await this.cacheManager.get(id)) || (await this.ticketModel.findOne({ _id: id }));
 
     if (!ticket) {
-      throw new NotFoundException(MESSAGES.ticketNotFound);
+      throw new NotFoundException(notFound(TICKET));
     }
 
     return ticket;
@@ -67,12 +65,12 @@ export class TicketsService {
     );
 
     if (!ticket) {
-      throw new NotFoundException(MESSAGES.ticketNotFound);
+      throw new NotFoundException(notFound(TICKET));
     }
 
     await this.cacheManager.del(id);
 
-    return { message: MESSAGES.ticketRemoved };
+    return { message: removed(TICKET) };
   }
 
   private async ticketNumberGenerate(): Promise<number> {

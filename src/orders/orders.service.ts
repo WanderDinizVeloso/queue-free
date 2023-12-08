@@ -9,14 +9,11 @@ import { UpdateOrderDto } from './dto/update-order.dto';
 import { IPatchAndDeleteReturn, IPostReturn } from './interface/order.interface';
 import { Order, OrderDocument } from './schema/order.schema';
 import { TicketsService } from 'src/tickets/tickets.service';
+import { created, notFound, removed, updated } from 'src/utils/messages-response';
 import { EIGHT_HOURS, TEN_SECONDS } from 'src/utils/redis-times';
 
-export const MESSAGES = {
-  orderCreated: 'order created successfully.',
-  orderUpdated: 'order updated successfully.',
-  orderRemoved: 'order removed successfully.',
-  orderNotFound: 'order not found or not active.',
-};
+const ORDER = 'order';
+const ORDERS = 'orders';
 
 @Injectable()
 export class OrdersService {
@@ -32,16 +29,16 @@ export class OrdersService {
 
     const ticket = await this.ticketService.create(order._id);
 
-    return { _id: order._id, ticket, message: MESSAGES.orderCreated };
+    return { _id: order._id, ticket, message: created(ORDER) };
   }
 
   async findAll(): Promise<Order[]> {
-    const ordersCache: Order[] = await this.cacheManager.get('orders');
+    const ordersCache: Order[] = await this.cacheManager.get(ORDERS);
 
     if (!ordersCache) {
       const orders = await this.orderModel.find();
 
-      await this.cacheManager.set('orders', orders, TEN_SECONDS);
+      await this.cacheManager.set(ORDERS, orders, TEN_SECONDS);
 
       return orders;
     }
@@ -54,7 +51,7 @@ export class OrdersService {
       (await this.cacheManager.get(id)) || (await this.orderModel.findOne({ _id: id }));
 
     if (!order) {
-      throw new NotFoundException(MESSAGES.orderNotFound);
+      throw new NotFoundException(notFound(ORDER));
     }
 
     return order;
@@ -68,12 +65,12 @@ export class OrdersService {
     );
 
     if (!order) {
-      throw new NotFoundException(MESSAGES.orderNotFound);
+      throw new NotFoundException(notFound(ORDER));
     }
 
     await this.cacheManager.set(id, order, EIGHT_HOURS);
 
-    return { message: MESSAGES.orderUpdated };
+    return { message: updated(ORDER) };
   }
 
   async remove(id: string): Promise<{ message: string }> {
@@ -84,11 +81,11 @@ export class OrdersService {
     );
 
     if (!order) {
-      throw new NotFoundException(MESSAGES.orderNotFound);
+      throw new NotFoundException(notFound(ORDER));
     }
 
     await this.cacheManager.del(id);
 
-    return { message: MESSAGES.orderRemoved };
+    return { message: removed(ORDER) };
   }
 }
