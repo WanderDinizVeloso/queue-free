@@ -1,3 +1,13 @@
+## [1.5.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.4.0...1.5.0) (2023-12-08)
+
+
+### Features
+
+* add cache in orders ([9dd69b6](https://github.com/WanderDinizVeloso/queue-free/commit/9dd69b663597adb6b84526377ea42ce77a9f4428))
+* add cache in tickets ([e1fd733](https://github.com/WanderDinizVeloso/queue-free/commit/e1fd73376ad77effd44266466e2d151ae14dc9bb))
+* add CacheModule in appModule ([6ebaeae](https://github.com/WanderDinizVeloso/queue-free/commit/6ebaeaef10b334055ea6bcfda62917ea90cd9cae))
+* add redis-times magic numbers ([59a50af](https://github.com/WanderDinizVeloso/queue-free/commit/59a50af1f048083eaa4d8b3a430b38d509a80f3e))
+
 ## [1.4.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.3.0...1.4.0) (2023-12-08)
 
 
