@@ -1,3 +1,10 @@
+## [1.4.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.3.0...1.4.0) (2023-12-08)
+
+
+### Features
+
+* add and configure docker-compose mongodb-redis-localstack ([cc6680b](https://github.com/WanderDinizVeloso/queue-free/commit/cc6680be9ba3b399a3589e0093a991006da8dcd4))
+
 ## [1.3.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.2.0...1.3.0) (2023-12-07)
 
 
