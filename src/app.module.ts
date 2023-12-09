@@ -10,8 +10,8 @@ import { TicketsModule } from './tickets/tickets.module';
     MongooseModule.forRoot(process.env.MONGO_URI),
     CacheModule.register({
       isGlobal: true,
-      host: 'localhost',
-      port: 6379,
+      host: process.env.REDIS_HOST,
+      port: process.env.PORT,
     }),
     OrdersModule,
     TicketsModule,
