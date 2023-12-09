@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/WanderDinizVeloso/queue-free/compare/1.5.0...1.5.1) (2023-12-09)
+
+
+### Bug Fixes
+
+* env fix ([4589ec4](https://github.com/WanderDinizVeloso/queue-free/commit/4589ec41c5e770ca23df2e7f81db25c50feaa5cf))
+
 ## [1.5.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.4.0...1.5.0) (2023-12-08)
 
 
