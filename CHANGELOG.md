@@ -1,3 +1,20 @@
+## [1.6.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.5.1...1.6.0) (2023-12-11)
+
+
+### Features
+
+* add aws module ([e47ce59](https://github.com/WanderDinizVeloso/queue-free/commit/e47ce5956a92228d27ce66248d8e4248aa80ab92))
+* add aws module in app module ([ca9d023](https://github.com/WanderDinizVeloso/queue-free/commit/ca9d023148bee0776a5e524815ce70ec53282894))
+* add aws-config ([5c8d175](https://github.com/WanderDinizVeloso/queue-free/commit/5c8d175f275098e6510877fc6f7575b341cd155e))
+* add awsMessageService ([bbc55bd](https://github.com/WanderDinizVeloso/queue-free/commit/bbc55bdbe7b93b291d234aa2680e0d1db050b359))
+* add sqsMessageService and sqsQueueService in aws module ([c58aa6b](https://github.com/WanderDinizVeloso/queue-free/commit/c58aa6bf429fc786355eae80d041337991313af5))
+* add sqsQueueService ([c93c3f5](https://github.com/WanderDinizVeloso/queue-free/commit/c93c3f570c106f4684767814712c2e7af233eacd))
+
+
+### Bug Fixes
+
+* docker-compose localstack fix ([9c444e0](https://github.com/WanderDinizVeloso/queue-free/commit/9c444e03e29fa6dc7668dd8f46bc6ccb6a8a1f03))
+
 ## [1.5.1](https://github.com/WanderDinizVeloso/queue-free/compare/1.5.0...1.5.1) (2023-12-09)
 
 
