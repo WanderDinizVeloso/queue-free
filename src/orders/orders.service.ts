@@ -64,27 +64,16 @@ export class OrdersService {
       { new: true },
     );
 
-    if (!order) {
-      throw new NotFoundException(notFound(ORDER));
-    }
-
     await this.cacheManager.set(id, order, EIGHT_HOURS);
 
     return { message: updated(ORDER) };
   }
 
   async remove(id: string): Promise<{ message: string }> {
-    const order = await this.orderModel.findOneAndUpdate(
-      { _id: id, active: true },
-      { active: false },
-      { new: true },
-    );
-
-    if (!order) {
-      throw new NotFoundException(notFound(ORDER));
-    }
-
-    await this.cacheManager.del(id);
+    await Promise.all([
+      this.orderModel.findOneAndUpdate({ _id: id, active: true }, { active: false }, { new: true }),
+      this.cacheManager.del(id),
+    ]);
 
     return { message: removed(ORDER) };
   }

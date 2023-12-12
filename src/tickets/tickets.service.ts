@@ -33,9 +33,10 @@ export class TicketsService {
       active: true,
     });
 
-    await this.cacheManager.set(ticket._id, ticket, EIGHT_HOURS);
-
-    await this.queueSendMessage(orderId, ticketNumber);
+    await Promise.all([
+      this.cacheManager.set(ticket._id, ticket, EIGHT_HOURS),
+      this.queueSendMessage(orderId, ticketNumber),
+    ]);
 
     return { _id: ticket._id, ticketNumber };
   }
@@ -79,6 +80,7 @@ export class TicketsService {
       await this.sqsService.deleteMessage(queueUrl, message.ReceiptHandle);
 
       const { orderId, ticketNumber } = JSON.parse(message.Body);
+
       const { _id, customerName, description } = await this.orderService.findOne(orderId);
 
       return { ticketNumber, order: { _id, customerName, description } };
