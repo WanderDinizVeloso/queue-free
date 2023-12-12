@@ -100,17 +100,14 @@ export class TicketsService {
   }
 
   async remove(id: string): Promise<{ message: string }> {
-    const ticket = await this.ticketModel.findOneAndUpdate(
-      { _id: id, active: true },
-      { active: false },
-      { new: true },
-    );
-
-    if (!ticket) {
-      throw new NotFoundException(notFound(TICKET));
-    }
-
-    await this.cacheManager.del(id);
+    await Promise.all([
+      this.ticketModel.findOneAndUpdate(
+        { _id: id, active: true },
+        { active: false },
+        { new: true },
+      ),
+      this.cacheManager.del(id),
+    ]);
 
     return { message: removed(TICKET) };
   }
