@@ -18,7 +18,7 @@ export class SqsService {
 
   async createQueue(QueueName: string, FifoQueue: boolean = false): Promise<string> {
     const { QueueUrl } = await this.AwsSQS.createQueue({
-      QueueName: FifoQueue ? `${QueueName}.fifo` : QueueName,
+      QueueName: FifoQueue && !QueueName.includes('.fifo') ? `${QueueName}.fifo` : QueueName,
       Attributes: {
         FifoQueue: `${FifoQueue}`,
         ContentBasedDeduplication: FifoQueue ? 'true' : 'false',
@@ -66,7 +66,7 @@ export class SqsService {
       MessageBody,
     };
 
-    if (QueueUrl.includes('fifo')) {
+    if (QueueUrl.includes('.fifo')) {
       payload.MessageGroupId = MessageGroupId || QueueUrl;
     }
 
