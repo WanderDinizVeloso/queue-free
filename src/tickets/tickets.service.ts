@@ -65,20 +65,14 @@ export class TicketsService {
     return ticket;
   }
 
-  async remove(id: string): Promise<{ message: string }> {
-    const ticket = await this.ticketModel.findOneAndUpdate(
-      { _id: id, active: true },
-      { active: false },
-      { new: true },
-    );
+  private async queueSendMessage(orderId: string, ticketNumber: number): Promise<void> {
+    const payload: IQueueMessagePayload = { orderId, ticketNumber };
 
-    if (!ticket) {
-      throw new NotFoundException(notFound(TICKET));
-    }
+    const queueUrl =
+      (await this.sqsService.getQueueUrl(QUEUE_NAME_FIFO)) ||
+      (await this.sqsService.createQueue(QUEUE_NAME_FIFO, true));
 
-    await this.cacheManager.del(id);
-
-    return { message: removed(TICKET) };
+    await this.sqsService.sendMessage(queueUrl, JSON.stringify(payload));
   }
 
   async receiveTicketMessage(): Promise<IQueueTicketResponse | string> {
@@ -103,14 +97,20 @@ export class TicketsService {
     return 'There is no ticket in the queue.';
   }
 
-  private async queueSendMessage(orderId: string, ticketNumber: number): Promise<void> {
-    const payload: IQueueMessagePayload = { orderId, ticketNumber };
+  async remove(id: string): Promise<{ message: string }> {
+    const ticket = await this.ticketModel.findOneAndUpdate(
+      { _id: id, active: true },
+      { active: false },
+      { new: true },
+    );
 
-    const queueUrl =
-      (await this.sqsService.getQueueUrl(QUEUE_NAME_FIFO)) ||
-      (await this.sqsService.createQueue(QUEUE_NAME_FIFO, true));
+    if (!ticket) {
+      throw new NotFoundException(notFound(TICKET));
+    }
 
-    await this.sqsService.sendMessage(queueUrl, JSON.stringify(payload));
+    await this.cacheManager.del(id);
+
+    return { message: removed(TICKET) };
   }
 
   private async ticketNumberGenerate(): Promise<number> {
