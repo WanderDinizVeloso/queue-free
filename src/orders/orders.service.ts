@@ -1,6 +1,6 @@
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -20,7 +20,7 @@ export class OrdersService {
   constructor(
     @InjectModel(Order.name) private orderModel: Model<OrderDocument>,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-    private ticketService: TicketsService,
+    @Inject(forwardRef(() => TicketsService)) private ticketService: TicketsService,
   ) {}
   async create(createOrderDto: CreateOrderDto): Promise<IPostReturn> {
     const order = await this.orderModel.create({ ...createOrderDto, active: true });
