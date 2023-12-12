@@ -1,9 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
-import { IPatchAndDeleteReturn, IPostReturn } from './interface/order.interface';
+import { IPostReturn } from './interface/order.interface';
 import { OrdersService } from './orders.service';
 import { Order } from './schema/order.schema';
 
@@ -36,20 +35,5 @@ export class OrdersController {
   @ApiOperation({ summary: SUMMARY_MESSAGE.findOne })
   async findOne(@Param('id') id: string): Promise<Order> {
     return this.ordersService.findOne(id);
-  }
-
-  @Patch(':id')
-  @ApiOperation({ summary: SUMMARY_MESSAGE.update })
-  async update(
-    @Param('id') id: string,
-    @Body() updateOrderDto: UpdateOrderDto,
-  ): Promise<IPatchAndDeleteReturn> {
-    return this.ordersService.update(id, updateOrderDto);
-  }
-
-  @Delete(':id')
-  @ApiOperation({ summary: SUMMARY_MESSAGE.remove })
-  async remove(@Param('id') id: string): Promise<{ message: string }> {
-    return this.ordersService.remove(id);
   }
 }
