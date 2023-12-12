@@ -1,3 +1,18 @@
+## [1.7.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.6.0...1.7.0) (2023-12-12)
+
+
+### Features
+
+* add ticket interface ([0e47abc](https://github.com/WanderDinizVeloso/queue-free/commit/0e47abcecb384e995ab4b7fefcb4cc56d959d6a9))
+* add tickets controller ([ab3f07b](https://github.com/WanderDinizVeloso/queue-free/commit/ab3f07bb109e22c5b308d8247d32fc2e357dda02))
+* queue implement queue in tickets ([e8cf557](https://github.com/WanderDinizVeloso/queue-free/commit/e8cf55759806c5627e2bb579103ae6ba9b43b809))
+
+
+### Bug Fixes
+
+* resolves circular dependency orders-tickets ([ff48923](https://github.com/WanderDinizVeloso/queue-free/commit/ff48923668e65d6b9ae97220152e5ac234c44786))
+* sqsService createQueue and sendMessage fix ([8293e42](https://github.com/WanderDinizVeloso/queue-free/commit/8293e426219cbc23cb2e5446eacc05da7d518a05))
+
 ## [1.6.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.5.1...1.6.0) (2023-12-11)
 
 
