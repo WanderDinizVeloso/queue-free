@@ -10,8 +10,6 @@ const SUMMARY_MESSAGE = {
   create: 'Create order.',
   findAll: 'Search all orders.',
   findOne: 'Search for a order by ID.',
-  update: 'Update order data by ID.',
-  remove: 'Remove order by ID.',
 };
 
 @ApiTags('Orders')
