@@ -1,3 +1,11 @@
+## [1.8.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.7.1...1.8.0) (2023-12-12)
+
+
+### Features
+
+* add .env-example ([e2f1f2f](https://github.com/WanderDinizVeloso/queue-free/commit/e2f1f2f11af4f00fd39010f76e9c73c96309651f))
+* organize envronment in app.module, main and aws-config ([e5e3589](https://github.com/WanderDinizVeloso/queue-free/commit/e5e358942e00da2878265b3a6ad13e11c9c81e5f))
+
 ## [1.7.1](https://github.com/WanderDinizVeloso/queue-free/compare/1.7.0...1.7.1) (2023-12-12)
 
 
