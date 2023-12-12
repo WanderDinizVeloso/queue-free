@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/WanderDinizVeloso/queue-free/compare/1.7.0...1.7.1) (2023-12-12)
+
+
+### Bug Fixes
+
+* orders patch and delete remove ([7f689c8](https://github.com/WanderDinizVeloso/queue-free/commit/7f689c81ceff1d67dc239a8e1745fd89f770a2fb))
+
 ## [1.7.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.6.0...1.7.0) (2023-12-12)
 
 
