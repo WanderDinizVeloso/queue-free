@@ -65,17 +65,7 @@ export class TicketsService {
     return ticket;
   }
 
-  private async queueSendMessage(orderId: string, ticketNumber: number): Promise<void> {
-    const payload: IQueueMessagePayload = { orderId, ticketNumber };
-
-    const queueUrl =
-      (await this.sqsService.getQueueUrl(QUEUE_NAME_FIFO)) ||
-      (await this.sqsService.createQueue(QUEUE_NAME_FIFO, true));
-
-    await this.sqsService.sendMessage(queueUrl, JSON.stringify(payload));
-  }
-
-  async receiveTicketMessage(): Promise<IQueueTicketResponse | string> {
+  async queueReceiveMessage(): Promise<IQueueTicketResponse | string> {
     const MESSAGE_MAX_NUMBER = 1;
     const FIRST_INDEX = 0;
 
@@ -95,6 +85,16 @@ export class TicketsService {
     }
 
     return 'There is no ticket in the queue.';
+  }
+
+  private async queueSendMessage(orderId: string, ticketNumber: number): Promise<void> {
+    const payload: IQueueMessagePayload = { orderId, ticketNumber };
+
+    const queueUrl =
+      (await this.sqsService.getQueueUrl(QUEUE_NAME_FIFO)) ||
+      (await this.sqsService.createQueue(QUEUE_NAME_FIFO, true));
+
+    await this.sqsService.sendMessage(queueUrl, JSON.stringify(payload));
   }
 
   async remove(id: string): Promise<{ message: string }> {
