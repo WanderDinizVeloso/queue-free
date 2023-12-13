@@ -1,6 +1,12 @@
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+  forwardRef,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -38,7 +44,7 @@ export class TicketsService {
     await Promise.all([
       this.cacheManager.set(ticket._id, ticket, EIGHT_HOURS),
       this.statusService.update(orderId, { ticketCreatedAt: new Date() }),
-      this.queueSendMessage(orderId, ticketNumber),
+      this.queueSendMessage(orderId, ticket._id, ticketNumber),
     ]);
 
     return { _id: ticket._id, ticketNumber };
@@ -69,7 +75,29 @@ export class TicketsService {
     return ticket;
   }
 
-  async queueReceiveMessage(): Promise<IQueueTicketResponse | string> {
+  async finishManufacturing(id: string): Promise<{ message: string }> {
+    const ticket = await this.findOne(id);
+
+    if (!ticket) {
+      throw new NotFoundException(notFound(TICKET));
+    }
+
+    const status = await this.statusService.findOne(ticket.orderId);
+
+    if (!status.manufacturingStartedAt) {
+      throw new BadRequestException('product manufacturing not yet started.');
+    }
+
+    if (status.manufacturingFinishedAt) {
+      throw new BadRequestException('manufacturing of the product already completed.');
+    }
+
+    await this.statusService.update(ticket.orderId, { manufacturingFinishedAt: new Date() });
+
+    return { message: 'manufacturing carried out successfully.' };
+  }
+
+  async queueReceiveMessage(): Promise<IQueueTicketResponse | { message: string }> {
     const MESSAGE_MAX_NUMBER = 1;
     const FIRST_INDEX = 0;
 
@@ -80,7 +108,7 @@ export class TicketsService {
     if (messageList.length) {
       const message = messageList[FIRST_INDEX];
 
-      const { orderId, ticketNumber } = JSON.parse(message.Body);
+      const { orderId, ticketId, ticketNumber } = JSON.parse(message.Body);
 
       await Promise.all([
         this.sqsService.deleteMessage(queueUrl, message.ReceiptHandle),
@@ -92,14 +120,18 @@ export class TicketsService {
 
       const { _id, customerName, description } = await this.orderService.findOne(orderId);
 
-      return { ticketNumber, order: { _id, customerName, description } };
+      return { ticketNumber, ticketId, order: { _id, customerName, description } };
     }
 
-    return 'There is no ticket in the queue.';
+    return { message: 'There is no ticket in the queue.' };
   }
 
-  private async queueSendMessage(orderId: string, ticketNumber: number): Promise<void> {
-    const payload: IQueueMessagePayload = { orderId, ticketNumber };
+  private async queueSendMessage(
+    orderId: string,
+    ticketId: string,
+    ticketNumber: number,
+  ): Promise<void> {
+    const payload: IQueueMessagePayload = { orderId, ticketId, ticketNumber };
 
     const queueUrl =
       (await this.sqsService.getQueueUrl(QUEUE_NAME_FIFO)) ||
