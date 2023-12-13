@@ -1,3 +1,17 @@
+## [1.10.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.9.0...1.10.0) (2023-12-13)
+
+
+### Features
+
+* add completeOrder in order controller ([7e4243b](https://github.com/WanderDinizVeloso/queue-free/commit/7e4243b34e933e17f95ff261836bfe70016837d1))
+* add completeOrder in order service ([6f9a4b6](https://github.com/WanderDinizVeloso/queue-free/commit/6f9a4b6b18712198546eca829587e0effc761996))
+* add findOne in statusService ([9bde094](https://github.com/WanderDinizVeloso/queue-free/commit/9bde0947346f9325d866bcda1d347d2aa09afffc))
+* add finishManufacturing in ticketController ([348ad04](https://github.com/WanderDinizVeloso/queue-free/commit/348ad04c3f7411dd79c6341b46e101c03fcdfac7))
+* add finishManufacturing in ticketService ([7b96059](https://github.com/WanderDinizVeloso/queue-free/commit/7b960597566c9a5877472953ed786ffd4b945eab))
+* add ticketId in IQueueMessagePayload ([b0d94f9](https://github.com/WanderDinizVeloso/queue-free/commit/b0d94f97930b5137a5a23c87577cd78bae030a21))
+* add ticketId in IStatusPayload ([ac383d3](https://github.com/WanderDinizVeloso/queue-free/commit/ac383d35470adb45faac53d0ef53ead366dd279c))
+* add ticketId in StatusSchema ([4e41d9d](https://github.com/WanderDinizVeloso/queue-free/commit/4e41d9d1555a099d6c4b3668cf660f6f807306f3))
+
 ## [1.9.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.8.0...1.9.0) (2023-12-13)
 
 
