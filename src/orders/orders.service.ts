@@ -1,6 +1,12 @@
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+  forwardRef,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -25,6 +31,32 @@ export class OrdersService {
     private statusService: StatusService,
   ) {}
 
+  async completeOrder(id: string): Promise<{ message: string }> {
+    const order = await this.findOne(id);
+
+    if (!order) {
+      throw new NotFoundException(notFound(ORDER));
+    }
+
+    const status = await this.statusService.findOne(order._id);
+
+    if (!order.active) {
+      throw new BadRequestException('order already completed');
+    }
+
+    if (!status.manufacturingFinishedAt) {
+      throw new BadRequestException('product manufacturing not yet finished');
+    }
+
+    await Promise.all([
+      this.remove(id),
+      this.ticketService.remove(status.ticketId),
+      this.statusService.remove(order._id),
+    ]);
+
+    return { message: 'order placed successfully' };
+  }
+
   async create(createOrderDto: CreateOrderDto): Promise<IPostReturn> {
     const order = await this.orderModel.create({ ...createOrderDto, active: true });
 
@@ -34,6 +66,8 @@ export class OrdersService {
     ]);
 
     const ticket = await this.ticketService.create(order._id);
+
+    await this.statusService.update(order._id, { ticketId: ticket._id });
 
     return { _id: order._id, ticket, message: created(ORDER) };
   }
