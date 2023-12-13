@@ -11,6 +11,7 @@ import { Order, OrderDocument } from './schema/order.schema';
 import { TicketsService } from 'src/tickets/tickets.service';
 import { created, notFound, removed, updated } from 'src/utils/messages-response';
 import { EIGHT_HOURS, TEN_SECONDS } from 'src/utils/redis-times';
+import { StatusService } from 'src/status/status.service';
 
 const ORDER = 'order';
 const ORDERS = 'orders';
@@ -21,11 +22,16 @@ export class OrdersService {
     @InjectModel(Order.name) private orderModel: Model<OrderDocument>,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     @Inject(forwardRef(() => TicketsService)) private ticketService: TicketsService,
+    private statusService: StatusService,
   ) {}
+
   async create(createOrderDto: CreateOrderDto): Promise<IPostReturn> {
     const order = await this.orderModel.create({ ...createOrderDto, active: true });
 
-    await this.cacheManager.set(order._id, order, EIGHT_HOURS);
+    await Promise.all([
+      this.cacheManager.set(order._id, order, EIGHT_HOURS),
+      this.statusService.create(order._id),
+    ]);
 
     const ticket = await this.ticketService.create(order._id);
 
@@ -64,27 +70,16 @@ export class OrdersService {
       { new: true },
     );
 
-    if (!order) {
-      throw new NotFoundException(notFound(ORDER));
-    }
-
     await this.cacheManager.set(id, order, EIGHT_HOURS);
 
     return { message: updated(ORDER) };
   }
 
   async remove(id: string): Promise<{ message: string }> {
-    const order = await this.orderModel.findOneAndUpdate(
-      { _id: id, active: true },
-      { active: false },
-      { new: true },
-    );
-
-    if (!order) {
-      throw new NotFoundException(notFound(ORDER));
-    }
-
-    await this.cacheManager.del(id);
+    await Promise.all([
+      this.orderModel.findOneAndUpdate({ _id: id, active: true }, { active: false }, { new: true }),
+      this.cacheManager.del(id),
+    ]);
 
     return { message: removed(ORDER) };
   }

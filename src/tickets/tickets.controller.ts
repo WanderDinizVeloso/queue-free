@@ -5,7 +5,7 @@ import { TicketsService } from './tickets.service';
 import { IQueueTicketResponse } from './interface/ticket.interface';
 
 const SUMMARY_MESSAGE = {
-  receiveTicketMessage: 'Search for a ticket in queue.',
+  queueReceiveMessage: 'Search for a ticket in queue.',
 };
 
 @ApiTags('Tickets')
@@ -14,8 +14,8 @@ export class TicketsController {
   constructor(private readonly ticketsService: TicketsService) {}
 
   @Get()
-  @ApiOperation({ summary: SUMMARY_MESSAGE.receiveTicketMessage })
-  receiveTicketMessage(): Promise<IQueueTicketResponse | string> {
-    return this.ticketsService.receiveTicketMessage();
+  @ApiOperation({ summary: SUMMARY_MESSAGE.queueReceiveMessage })
+  queueReceiveMessage(): Promise<IQueueTicketResponse | string> {
+    return this.ticketsService.queueReceiveMessage();
   }
 }

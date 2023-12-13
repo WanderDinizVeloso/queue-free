@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 type OrderDocument = Order & Document;
@@ -10,19 +10,6 @@ class Order extends Document {
 
   @Prop()
   description: string;
-
-  @Prop()
-  preparerName: string;
-
-  @Prop(
-    raw({
-      ticketCreated: { type: Date },
-      preparationStarted: { type: Date },
-      preparationFinished: { type: Date },
-      customerReceived: { type: Date },
-    }),
-  )
-  status: Record<string, Date>;
 
   @Prop()
   active: boolean;

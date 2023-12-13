@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { AwsModule } from './aws/aws.module';
 import { OrdersModule } from './orders/orders.module';
+import { StatusModule } from './status/status.module';
 import { TicketsModule } from './tickets/tickets.module';
 
 @Module({
@@ -17,6 +18,7 @@ import { TicketsModule } from './tickets/tickets.module';
     OrdersModule,
     TicketsModule,
     AwsModule,
+    StatusModule,
   ],
   controllers: [],
   providers: [],

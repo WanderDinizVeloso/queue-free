@@ -8,6 +8,7 @@ import { IQueueMessagePayload, IQueueTicketResponse } from './interface/ticket.i
 import { Ticket, TicketDocument } from './schema/ticket.schema';
 import { SqsService } from 'src/aws/sqs.service';
 import { OrdersService } from 'src/orders/orders.service';
+import { StatusService } from 'src/status/status.service';
 import { EIGHT_HOURS, TEN_SECONDS } from 'src/utils/redis-times';
 import { notFound, removed } from 'src/utils/messages-response';
 
@@ -22,6 +23,7 @@ export class TicketsService {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private sqsService: SqsService,
     @Inject(forwardRef(() => OrdersService)) private orderService: OrdersService,
+    private statusService: StatusService,
   ) {}
 
   async create(orderId: string): Promise<{ _id: string; ticketNumber: number }> {
@@ -33,9 +35,11 @@ export class TicketsService {
       active: true,
     });
 
-    await this.cacheManager.set(ticket._id, ticket, EIGHT_HOURS);
-
-    await this.queueSendMessage(orderId, ticketNumber);
+    await Promise.all([
+      this.cacheManager.set(ticket._id, ticket, EIGHT_HOURS),
+      this.statusService.update(orderId, { ticketCreatedAt: new Date() }),
+      this.queueSendMessage(orderId, ticketNumber),
+    ]);
 
     return { _id: ticket._id, ticketNumber };
   }
@@ -65,23 +69,7 @@ export class TicketsService {
     return ticket;
   }
 
-  async remove(id: string): Promise<{ message: string }> {
-    const ticket = await this.ticketModel.findOneAndUpdate(
-      { _id: id, active: true },
-      { active: false },
-      { new: true },
-    );
-
-    if (!ticket) {
-      throw new NotFoundException(notFound(TICKET));
-    }
-
-    await this.cacheManager.del(id);
-
-    return { message: removed(TICKET) };
-  }
-
-  async receiveTicketMessage(): Promise<IQueueTicketResponse | string> {
+  async queueReceiveMessage(): Promise<IQueueTicketResponse | string> {
     const MESSAGE_MAX_NUMBER = 1;
     const FIRST_INDEX = 0;
 
@@ -92,9 +80,16 @@ export class TicketsService {
     if (messageList.length) {
       const message = messageList[FIRST_INDEX];
 
-      await this.sqsService.deleteMessage(queueUrl, message.ReceiptHandle);
-
       const { orderId, ticketNumber } = JSON.parse(message.Body);
+
+      await Promise.all([
+        this.sqsService.deleteMessage(queueUrl, message.ReceiptHandle),
+        this.statusService.update(orderId, {
+          receivedQueueMessageAt: new Date(),
+          manufacturingStartedAt: new Date(),
+        }),
+      ]);
+
       const { _id, customerName, description } = await this.orderService.findOne(orderId);
 
       return { ticketNumber, order: { _id, customerName, description } };
@@ -110,7 +105,23 @@ export class TicketsService {
       (await this.sqsService.getQueueUrl(QUEUE_NAME_FIFO)) ||
       (await this.sqsService.createQueue(QUEUE_NAME_FIFO, true));
 
-    await this.sqsService.sendMessage(queueUrl, JSON.stringify(payload));
+    await Promise.all([
+      this.sqsService.sendMessage(queueUrl, JSON.stringify(payload)),
+      this.statusService.update(orderId, { sendQueueMessageAt: new Date() }),
+    ]);
+  }
+
+  async remove(id: string): Promise<{ message: string }> {
+    await Promise.all([
+      this.ticketModel.findOneAndUpdate(
+        { _id: id, active: true },
+        { active: false },
+        { new: true },
+      ),
+      this.cacheManager.del(id),
+    ]);
+
+    return { message: removed(TICKET) };
   }
 
   private async ticketNumberGenerate(): Promise<number> {
