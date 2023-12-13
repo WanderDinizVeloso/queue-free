@@ -11,6 +11,7 @@ import { Order, OrderDocument } from './schema/order.schema';
 import { TicketsService } from 'src/tickets/tickets.service';
 import { created, notFound, removed, updated } from 'src/utils/messages-response';
 import { EIGHT_HOURS, TEN_SECONDS } from 'src/utils/redis-times';
+import { StatusService } from 'src/status/status.service';
 
 const ORDER = 'order';
 const ORDERS = 'orders';
@@ -21,11 +22,16 @@ export class OrdersService {
     @InjectModel(Order.name) private orderModel: Model<OrderDocument>,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     @Inject(forwardRef(() => TicketsService)) private ticketService: TicketsService,
+    private statusService: StatusService,
   ) {}
+
   async create(createOrderDto: CreateOrderDto): Promise<IPostReturn> {
     const order = await this.orderModel.create({ ...createOrderDto, active: true });
 
-    await this.cacheManager.set(order._id, order, EIGHT_HOURS);
+    await Promise.all([
+      this.cacheManager.set(order._id, order, EIGHT_HOURS),
+      this.statusService.create(order._id),
+    ]);
 
     const ticket = await this.ticketService.create(order._id);
 
