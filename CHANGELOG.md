@@ -1,3 +1,18 @@
+## [1.9.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.8.0...1.9.0) (2023-12-13)
+
+
+### Features
+
+* add status controller ([5a0cd0a](https://github.com/WanderDinizVeloso/queue-free/commit/5a0cd0a9bb1f7040ce37fb2db09b64698a2b6ef9))
+* add status default tests ([5dacf9b](https://github.com/WanderDinizVeloso/queue-free/commit/5dacf9be254ab4b5b5daaf9d34cda1ad3e0dee3c))
+* add status in orders ([608da8d](https://github.com/WanderDinizVeloso/queue-free/commit/608da8df6eac8f930a238f5f0a57acd78f94eae4))
+* add status in tickets ([0f45502](https://github.com/WanderDinizVeloso/queue-free/commit/0f45502618982d646b220958a3344002169cb887))
+* add status interface ([f0286e4](https://github.com/WanderDinizVeloso/queue-free/commit/f0286e440effeccb19719525436a2f77719c7ea8))
+* add status module ([c271c2f](https://github.com/WanderDinizVeloso/queue-free/commit/c271c2f769bd450781e29d0b5f2a1aaab18d390b))
+* add status module in app module ([9fc6f5e](https://github.com/WanderDinizVeloso/queue-free/commit/9fc6f5e444a1d299202c540b1b5c2b4831fde3c5))
+* add status schema ([20e141b](https://github.com/WanderDinizVeloso/queue-free/commit/20e141b262c907de1980f5ea7bbb43903a5ff072))
+* add status service ([c453cca](https://github.com/WanderDinizVeloso/queue-free/commit/c453ccad27ee4a80ef4f7bf97c4c937a075c4f2d))
+
 ## [1.8.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.7.1...1.8.0) (2023-12-12)
 
 
