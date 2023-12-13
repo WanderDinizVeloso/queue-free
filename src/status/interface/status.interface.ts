@@ -1,4 +1,5 @@
 interface IStatusPayload {
+  ticketId: string;
   ticketCreatedAt: Date;
   sendQueueMessageAt: Date;
   receivedQueueMessageAt: Date;

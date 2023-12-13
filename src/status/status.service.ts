@@ -1,12 +1,13 @@
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { Status, StatusDocument } from './schema/status.schema';
 import { IStatusUpdatePayload } from './interface/status.interface';
 import { EIGHT_HOURS, TEN_SECONDS } from 'src/utils/redis-times';
+import { notFound } from 'src/utils/messages-response';
 
 const STATUS = 'status';
 
@@ -39,6 +40,16 @@ export class StatusService {
     }
 
     return statusCache;
+  }
+
+  async findOne(orderId: string): Promise<Status> {
+    const status: Status = await this.statusModel.findOne({ orderId });
+
+    if (!status) {
+      throw new NotFoundException(notFound(STATUS));
+    }
+
+    return status;
   }
 
   async update(orderId: string, statusUpdatePayload: IStatusUpdatePayload): Promise<void> {

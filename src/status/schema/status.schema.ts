@@ -9,6 +9,9 @@ class Status extends Document {
   orderId: string;
 
   @Prop()
+  ticketId: string;
+
+  @Prop()
   orderCreatedAt: Date;
 
   @Prop()

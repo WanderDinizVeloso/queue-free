@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { CreateOrderDto } from './dto/create-order.dto';
@@ -10,6 +10,7 @@ const SUMMARY_MESSAGE = {
   create: 'Create order.',
   findAll: 'Search all orders.',
   findOne: 'Search for a order by ID.',
+  completeOrder: 'Complete the order.',
 };
 
 @ApiTags('Orders')
@@ -33,5 +34,11 @@ export class OrdersController {
   @ApiOperation({ summary: SUMMARY_MESSAGE.findOne })
   async findOne(@Param('id') id: string): Promise<Order> {
     return this.ordersService.findOne(id);
+  }
+
+  @Delete(':id')
+  @ApiOperation({ summary: SUMMARY_MESSAGE.completeOrder })
+  async completeOrder(@Param('id') id: string): Promise<{ message: string }> {
+    return this.ordersService.completeOrder(id);
   }
 }

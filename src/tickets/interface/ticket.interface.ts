@@ -1,5 +1,6 @@
 interface IQueueMessagePayload {
   orderId: string;
+  ticketId: string;
   ticketNumber: number;
 }
 
@@ -11,6 +12,7 @@ interface IOrderResponse {
 
 interface IQueueTicketResponse {
   ticketNumber: number;
+  ticketId: string;
   order: IOrderResponse;
 }
 
