@@ -1,0 +1,28 @@
+service: report
+
+provider:
+  name: aws
+  profile: default
+  runtime: nodejs18.x
+  stage: local
+  region: us-east-1
+  runtimeManagement: auto
+
+plugins:
+  - serverless-localstack
+
+custom:
+  localstack:
+    stages:
+      - local
+    host: http://localhost
+    edgePort: 4566
+    lambda:
+      mountCode: True
+    endpointFile: localstack_endpoints.json
+
+functions:
+  report:
+    timeout: 120
+    name: report
+    handler: src/lambdas/report.handler

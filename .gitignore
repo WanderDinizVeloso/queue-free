@@ -8,6 +8,10 @@
 # Env
 .env
 
+# serverless
+.serverless/*
+.build/*
+
 # Logs
 logs
 *.log
