@@ -1,7 +1,7 @@
 {
   "name": "queue-free",
   "version": "1.10.0",
-  "description": "",
+  "description": "queue-free.",
   "author": "Wander Veloso",
   "private": true,
   "license": "UNLICENSED",
@@ -12,13 +12,15 @@
     "start:dev": "docker-compose up | nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "lambda:deploy": "sls deploy --stage local",
+    "lambda:invoke": "sls invoke local -f report",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "prepare": "husky install",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
-    "prepare": "husky install"
+    "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
     "@aws-sdk/client-sqs": "^3.470.0",
@@ -63,6 +65,8 @@
     "jest": "^29.5.0",
     "prettier": "^3.0.0",
     "semantic-release": "^22.0.12",
+    "serverless": "^3.38.0",
+    "serverless-localstack": "^1.1.2",
     "source-map-support": "^0.5.21",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.0",
