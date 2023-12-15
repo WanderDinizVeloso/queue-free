@@ -6,6 +6,7 @@ import { AwsModule } from './aws/aws.module';
 import { OrdersModule } from './orders/orders.module';
 import { StatusModule } from './status/status.module';
 import { TicketsModule } from './tickets/tickets.module';
+import { ReportsModule } from './reports/reports.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { TicketsModule } from './tickets/tickets.module';
     TicketsModule,
     AwsModule,
     StatusModule,
+    ReportsModule,
   ],
   controllers: [],
   providers: [],
