@@ -1,3 +1,14 @@
+## [1.12.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.11.0...1.12.0) (2023-12-15)
+
+
+### Features
+
+* add report schema ([fc88cf4](https://github.com/WanderDinizVeloso/queue-free/commit/fc88cf4a28d5acd5b48fc9198acaf52f4b6acaa3))
+* add reports controller ([26d77a3](https://github.com/WanderDinizVeloso/queue-free/commit/26d77a3282b53818e1ee16d3d78a7e60054f790a))
+* add reports module ([5852bb4](https://github.com/WanderDinizVeloso/queue-free/commit/5852bb4aa40b3a85c2b42e055b274ea0bae103e4))
+* add reports module in app module ([0dbf353](https://github.com/WanderDinizVeloso/queue-free/commit/0dbf353e57bb5d34bc5e42c4e2afe7e92170ed42))
+* add reports service ([31231ac](https://github.com/WanderDinizVeloso/queue-free/commit/31231acb16919c3672cf8854a69b0bf294884e6d))
+
 ## [1.11.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.10.0...1.11.0) (2023-12-15)
 
 
