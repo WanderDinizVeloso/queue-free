@@ -1,3 +1,13 @@
+## [1.11.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.10.0...1.11.0) (2023-12-15)
+
+
+### Features
+
+* add localstack_endpoints ([76e8227](https://github.com/WanderDinizVeloso/queue-free/commit/76e8227e3b7a696508f60d3456bf823924e6b397))
+* add report handler ([b3c78ab](https://github.com/WanderDinizVeloso/queue-free/commit/b3c78ab492a5b997bbebb8297f752b7c823b762f))
+* add serverless dependencies and add lambda scripts ([84cdb82](https://github.com/WanderDinizVeloso/queue-free/commit/84cdb82644709df5f2e3151727e5cf54b5009499))
+* add serverless.yml ([9484f18](https://github.com/WanderDinizVeloso/queue-free/commit/9484f186d04459f087d29ab1375d77a64b5eb166))
+
 ## [1.10.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.9.0...1.10.0) (2023-12-13)
 
 
