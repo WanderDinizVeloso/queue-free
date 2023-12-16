@@ -68,6 +68,18 @@ O NestJS é um framework Node.js de código aberto destinado ao desenvolvimento 
 
 Quer saber mais? [AQUI](https://nextjs.org/)
 
+### Docker
+
+O Docker é utilizado para implantar aplicativos dentro de containers virtuais, permitindo que vários aplicativos funcionem em diferentes ambientes complexos.
+
+Quer saber mais? [AQUI](https://www.docker.com/)
+
+### Docker Compose
+
+O docker compose é o orquestrador de containers Docker, definindo e executando aplicativos Docker com vários contêineres.
+
+Quer saber mais? [AQUI](https://docs.docker.com/compose/)
+
 ### ESLint
 
 O ESLint é um linter, uma ferramenta de análise estática, para as linguagens Javascript e Typescript.
@@ -277,8 +289,8 @@ Para rodar o projeto, você vai precisar instalar as seguintes ferramentas:
 
 - [Git](https://git-scm.com);
 - [Node.js](https://nodejs.org/en/) - versão 18.17.0;
-- [Docker]() - versão mínima 20.10.24;
-- [Docker Compose]() - versão mínima 2.17.2;
+- [Docker](https://www.docker.com/) - versão mínima 20.10.24;
+- [Docker Compose](https://docs.docker.com/compose/) - versão mínima 2.17.2;
 - Um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/) ou outro de sua preferência;
 
 ## Rodando local
@@ -300,9 +312,9 @@ Para rodar o projeto, você vai precisar instalar as seguintes ferramentas:
 - Bora iniciar?:
 
   ```bash
-  # Inicie o sistema e suba o docker
+  # Inicie o sistema e suba os contêineres do docker
   $ npm run start:dev
-    obs.: O comando inicia o sistema e sobe os dockers
+    obs.: O comando inicia o sistema e sobe os contêineres
 
   # Acesse o swagger
   http://localhost:3001
