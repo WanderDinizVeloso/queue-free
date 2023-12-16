@@ -1,6 +1,6 @@
 # Queue-free
 
-<img src="https://img.shields.io/static/v1?label=Version&message=1.12.0&color=FF2102&style=for-the-badge&logo="/> <img src="https://img.shields.io/static/v1?label=License&message=MIT&color=119CE1&style=for-the-badge&logo="/> <img src="https://img.shields.io/static/v1?label=PR&message=YES&color=4DC31A&style=for-the-badge&logo="/>
+<img src="https://img.shields.io/static/v1?label=Version&message=1.12.1&color=FF2102&style=for-the-badge&logo="/> <img src="https://img.shields.io/static/v1?label=License&message=MIT&color=119CE1&style=for-the-badge&logo="/> <img src="https://img.shields.io/static/v1?label=PR&message=YES&color=4DC31A&style=for-the-badge&logo="/>
 
 Projeto criado para colocar em prática os conhecimentos adquiridos ao longo dos últimos 06 (seis) meses, atendendo ao PDI Seedz (Integração - Segundo Semestre - 2023).
 
