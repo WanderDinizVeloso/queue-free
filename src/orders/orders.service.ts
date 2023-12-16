@@ -34,10 +34,6 @@ export class OrdersService {
   async completeOrder(id: string): Promise<{ message: string }> {
     const order = await this.findOne(id);
 
-    if (!order) {
-      throw new NotFoundException(notFound(ORDER));
-    }
-
     const status = await this.statusService.findOne(order._id);
 
     if (!order.active) {
