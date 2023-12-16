@@ -25,10 +25,10 @@ const ORDERS = 'orders';
 @Injectable()
 export class OrdersService {
   constructor(
-    @InjectModel(Order.name) private orderModel: Model<OrderDocument>,
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
-    @Inject(forwardRef(() => TicketsService)) private ticketService: TicketsService,
-    private statusService: StatusService,
+    @InjectModel(Order.name) private readonly orderModel: Model<OrderDocument>,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
+    @Inject(forwardRef(() => TicketsService)) private readonly ticketService: TicketsService,
+    private readonly statusService: StatusService,
   ) {}
 
   async completeOrder(id: string): Promise<{ message: string }> {

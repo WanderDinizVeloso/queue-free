@@ -11,7 +11,7 @@ interface IPayload {
 
 @Injectable()
 export class SqsService {
-  private AwsSQS: SQS;
+  private readonly AwsSQS: SQS;
   constructor() {
     this.AwsSQS = new SQS(config);
   }

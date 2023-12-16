@@ -25,8 +25,8 @@ const QUEUE_NAME_FIFO = `${TICKETS}.fifo`;
 @Injectable()
 export class TicketsService {
   constructor(
-    @InjectModel(Ticket.name) private ticketModel: Model<TicketDocument>,
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    @InjectModel(Ticket.name) private readonly ticketModel: Model<TicketDocument>,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
     private sqsService: SqsService,
     @Inject(forwardRef(() => OrdersService)) private orderService: OrdersService,
     private statusService: StatusService,

@@ -14,8 +14,8 @@ const STATUS = 'status';
 @Injectable()
 export class StatusService {
   constructor(
-    @InjectModel(Status.name) private statusModel: Model<StatusDocument>,
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    @InjectModel(Status.name) private readonly statusModel: Model<StatusDocument>,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
   async create(orderId: string): Promise<void> {
