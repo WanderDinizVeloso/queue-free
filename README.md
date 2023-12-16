@@ -70,7 +70,6 @@ Quer saber mais? [AQUI](https://nextjs.org/)
 
 ### ESLint
 
-
 O ESLint é um linter, uma ferramenta de análise estática, para as linguagens Javascript e Typescript.
 
 Quer saber mais? [AQUI](https://eslint.org/)
@@ -315,8 +314,6 @@ Para rodar o projeto, você vai precisar instalar as seguintes ferramentas:
   $ npm run lambda:invoke
 
   ```
-
-## Swagger do Projeto
 
 ## Quer contribuir com o projeto?
 
