@@ -56,12 +56,11 @@ export class OrdersService {
   async create(createOrderDto: CreateOrderDto): Promise<IPostReturn> {
     const order = await this.orderModel.create({ ...createOrderDto, active: true });
 
-    await Promise.all([
+    const [ticket] = await Promise.all([
+      this.ticketService.create(order._id),
       this.cacheManager.set(order._id, order, EIGHT_HOURS),
       this.statusService.create(order._id),
     ]);
-
-    const ticket = await this.ticketService.create(order._id);
 
     await this.statusService.update(order._id, { ticketId: ticket._id });
 

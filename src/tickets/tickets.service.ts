@@ -110,15 +110,14 @@ export class TicketsService {
 
       const { orderId, ticketId, ticketNumber } = JSON.parse(message.Body);
 
-      await Promise.all([
+      const [{ _id, customerName, description }] = await Promise.all([
+        this.orderService.findOne(orderId),
         this.sqsService.deleteMessage(queueUrl, message.ReceiptHandle),
         this.statusService.update(orderId, {
           receivedQueueMessageAt: new Date(),
           manufacturingStartedAt: new Date(),
         }),
       ]);
-
-      const { _id, customerName, description } = await this.orderService.findOne(orderId);
 
       return { ticketNumber, ticketId, order: { _id, customerName, description } };
     }
