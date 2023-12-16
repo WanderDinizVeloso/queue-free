@@ -1,3 +1,11 @@
+## [1.12.1](https://github.com/WanderDinizVeloso/queue-free/compare/1.12.0...1.12.1) (2023-12-16)
+
+
+### Bug Fixes
+
+* constructor params readonly fix ([fde239a](https://github.com/WanderDinizVeloso/queue-free/commit/fde239afe96eb9823a5fd4332aa49cf21534d2cf))
+* ticket constructor params readonly fix ([ae949f2](https://github.com/WanderDinizVeloso/queue-free/commit/ae949f214834e13c26a9c98cb6344a57bc667797))
+
 ## [1.12.0](https://github.com/WanderDinizVeloso/queue-free/compare/1.11.0...1.12.0) (2023-12-15)
 
 

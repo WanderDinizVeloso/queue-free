@@ -1,6 +1,6 @@
 {
   "name": "queue-free",
-  "version": "1.12.0",
+  "version": "1.12.1",
   "description": "API para controle de ordem de fabricação de produtos, através do serviço SQS da AWS, além da criação de uma lambda que rodará diariamente para gerar relatório dos tempos de cada etapa da fabricação.",
   "author": "Wander Veloso",
   "private": true,
