@@ -28,8 +28,8 @@ export class TicketsService {
     @InjectModel(Ticket.name) private readonly ticketModel: Model<TicketDocument>,
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
     private sqsService: SqsService,
-    @Inject(forwardRef(() => OrdersService)) private orderService: OrdersService,
-    private statusService: StatusService,
+    @Inject(forwardRef(() => OrdersService)) private readonly orderService: OrdersService,
+    private readonly statusService: StatusService,
   ) {}
 
   async create(orderId: string): Promise<{ _id: string; ticketNumber: number }> {
