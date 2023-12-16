@@ -14,8 +14,8 @@ const REPORTS = 'reports';
 @Injectable()
 export class ReportsService {
   constructor(
-    @InjectModel(Report.name) private reportModel: Model<ReportDocument>,
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    @InjectModel(Report.name) private readonly reportModel: Model<ReportDocument>,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
   private dateValidate(date: string): void {
