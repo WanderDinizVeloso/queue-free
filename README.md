@@ -142,7 +142,7 @@ Quer saber mais? [AQUI](https://www.localstack.cloud/)
 
 ### Serverless/serverless-localstack
 
-O serverless é uma ferramenta de linha de command (CLI) que auxilia no desenvolvimento de AWS lambdas.
+O serverless é uma ferramenta de linha de comando (CLI) que auxilia no desenvolvimento de AWS lambdas.
 
 Quer saber mais? [AQUI](https://www.npmjs.com/package/serverless)
 
