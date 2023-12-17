@@ -18,6 +18,7 @@ Sobre o Projeto: Desenvolvi uma API para controle de ordem de fabricação de pr
 - [Licença](#licença)
 - [Tecnologias utilizadas](#tecnologias-utilizadas)
 - [Estrutura do Projeto](#estrutura-do-projeto)
+- [Caminho Feliz do Projeto](#caminho-feliz-do-projeto)
 - [Swagger](#swagger)
 - [Diagrama de Domínio](#diagrama-de-domínio)
 - [Diagrama de Entidade](#diagrama-de-entidade)
@@ -233,6 +234,12 @@ Após iniciar o projeto, seguindo os passos ([AQUI](#rodando-local)), o swagger 
 
 ---
 
+# Caminho Feliz do Projeto
+
+<img src="./doc-images/happy path.png" alt="swagger" width="1190"/>
+
+---
+
 # Diagrama de Domínio
 
 <img src="./doc-images/Domain.png" alt="swagger" width="1190"/>
@@ -314,7 +321,7 @@ Para rodar o projeto, você vai precisar instalar as seguintes ferramentas:
   ```bash
   # Inicie o sistema e suba os contêineres do docker
   $ npm run start:dev
-    obs.: O comando inicia o sistema e sobe os contêineres
+    #obs.: O comando inicia o sistema e sobe os contêineres
 
   # Acesse o swagger
   http://localhost:3001
@@ -336,9 +343,12 @@ Para rodar o projeto, você vai precisar instalar as seguintes ferramentas:
   $ git checkout -b nome-da-nova-branch
 
   # Adicione as mudanças desejadas com os devidos commits
-  $ git add . # adiciona as mudanças ao stage do Git
-  $ git commit -m 'typeDoCommit:informação do conteúdo do commit' # salvando as alterações de cada pequena alteração em um commit
-  $ git push -u origin nome-da-nova-branch # adiciona a nova branch no repositório remoto do Projeto
+  $ git add .
+      # adiciona as mudanças ao stage do Git
+  $ git commit -m 'CommitType:informação do conteúdo do commit'
+      # salvando as alterações de cada pequena alteração em um commit.
+  $ git push -u origin nome-da-nova-branch
+      # adiciona a nova branch no repositório remoto do Projeto
   ```
 
 - Crie um novo `Pull Request` (PR):
